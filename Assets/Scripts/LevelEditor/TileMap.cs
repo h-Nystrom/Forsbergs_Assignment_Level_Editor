@@ -2,17 +2,13 @@
 
 namespace LevelEditor{
     public class TileMap : MonoBehaviour{
-        TileGrid tileGrid = new TileGrid();
-        [SerializeField]TileSO[] tileData;
-        [SerializeField] TileNames tileNames;
+        GridGenerator gridGenerator = new GridGenerator();
+        [SerializeField]TileSO[] tileData;//ScriptableObject
+        [SerializeField] TileNames startTileName;
         void Start(){
-            tileGrid.SetUp(tileData[(int) tileNames], transform);
-            tileGrid.GenerateGrid(true);
+            gridGenerator.SetUp(tileData[(int) startTileName], transform);
+            gridGenerator.GenerateGrid(true);
         }
-    }
-    public enum TileNames{
-        Grass,
-        Water
     }
 }
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace LevelEditor{
-    public class TileGrid{
+    public class GridGenerator{
         TileData[,] grid;
         int columns = 10;
         int rows = 10;

@@ -5,7 +5,8 @@ namespace LevelEditor{
     public class TileSO : ScriptableObject{
         [SerializeField]Material material;
         [SerializeField]GameObject tilePrefab;
-        
+
+        public Material TileMaterial => material;
         public void SetUp(TileData tileData, Transform parent){
             var instance = Instantiate(tilePrefab, tileData.Position,Quaternion.identity, parent);
             instance.GetComponent<SpriteRenderer>().material = material;
