@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace LevelEditor.DeveloperTools{
     [RequireComponent(typeof(Camera))]
@@ -16,15 +17,15 @@ namespace LevelEditor.DeveloperTools{
         //TODO: Research how to save the maps
         //TODO: Save/load maps
         Camera Cam => GetComponent<Camera>();
+        Image buttonUiBorder;
         void Awake(){
             userInput = new UserControls();
             userInput.UserAction.LeftMouseClick.performed += ctx => OnClick();
             userInput.UserAction.MousePosition.performed += ctx => mousePosition = ctx.ReadValue<Vector2>();
-
         }
 
-        public void OnSelectTileType(int tileNameIndex){
-            tileNames = (TileNames)tileNameIndex;
+        public void OnChangeTileType(TileNames tileNames){
+            this.tileNames = tileNames;
         }
         void OnClick(){
             Debug.DrawRay(Cam.ScreenToWorldPoint(mousePosition), Vector3.forward * 10,Color.red,10f);
@@ -34,7 +35,7 @@ namespace LevelEditor.DeveloperTools{
                 return;
             var tile = hit.collider.gameObject.GetComponent<Tile>();
             tile.ChangeTileType(tileSo[(int)tileNames]);
-            print("Click: " + tile.TileInfo.ID);
+            //print("Click: " + tile.TileInfo.ID);
         }
 
         void OnEnable(){
