@@ -8,9 +8,7 @@ namespace ColorEditor{
         [SerializeField] InputField inputField;
         [SerializeField]Slider[] sliders = new Slider[5];
         [SerializeField] Material material;
-        public static HexUi HexUiScript{ get; private set; }
         void Awake(){
-            HexUiScript = this;
             inputField.onEndEdit.AddListener(delegate{OnUpdateColor(inputField.text);});
             UpdateText();
         }
@@ -19,7 +17,7 @@ namespace ColorEditor{
         }
         void OnUpdateColor(string hexValue){
             var htmlValue = $"#{hexValue}";
-            if (!ColorUtility.TryParseHtmlString(htmlValue, out var color) || sliders.Length != 5) return;
+            if (!ColorUtility.TryParseHtmlString(htmlValue, out var color)) return;
             sliders[0].value = color.r;
             sliders[1].value = color.g;
             sliders[2].value = color.b;
