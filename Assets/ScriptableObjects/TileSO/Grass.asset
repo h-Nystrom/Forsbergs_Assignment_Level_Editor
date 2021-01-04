@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 055dafc2ed3bce54da5619447bfc620a, type: 2}
   tilePrefab: {fileID: 7602353054719879036, guid: 0f71d700605bcae4c843c209cc29fbf9, type: 3}
+  tileNames: 0

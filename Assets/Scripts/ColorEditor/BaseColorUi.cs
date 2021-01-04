@@ -5,18 +5,20 @@ using UnityEngine.UI;
 namespace ColorEditor{
     public class BaseColorUi : MonoBehaviour{
         [SerializeField] protected RgbaColor rgbaColor;
-        protected Slider Slider => GetComponentInChildren<Slider>();
-        protected InputField InputField => GetComponentInChildren<InputField>();
-        void Awake(){
-            InputField.onEndEdit.AddListener(delegate{rgbaColor.ConvertToFloat(InputField.text);});
-            Slider.onValueChanged.AddListener(delegate{rgbaColor.Value = Slider.value;});
-            InputField.onEndEdit.AddListener(delegate{UpdateSlider(InputField.text);});
-            
-            Slider.onValueChanged.AddListener(delegate{InputField.text = rgbaColor.ConvertToString;});
-            Slider.onValueChanged.AddListener(delegate{rgbaColor.UpdateColor();});
+        Slider BaseSlider => GetComponentInChildren<Slider>();
+        InputField BaseInputField => GetComponentInChildren<InputField>();
+        protected virtual void Awake(){
+            rgbaColor.GrayScaleValue = 1;
+            rgbaColor.Value = 1;
+            BaseInputField.onEndEdit.AddListener(delegate{BaseSlider.value = Calculations.ConvertToClampedFloat(BaseInputField.text, 1);});
+            BaseSlider.onValueChanged.AddListener(delegate{rgbaColor.Value = BaseSlider.value;});
+            BaseInputField.onEndEdit.AddListener(delegate{BaseSlider.value = Calculations.ConvertToClampedFloat(BaseInputField.text, 1);});
+            BaseSlider.onValueChanged.AddListener(delegate{BaseInputField.text = Calculations.ConvertToString255(rgbaColor.Value);});
+            BaseSlider.onValueChanged.AddListener(delegate{rgbaColor.UpdateColor();});
         }
-        void UpdateSlider(string value){
-            Slider.value = rgbaColor.ConvertToFloat(value);
+        protected virtual void OnDestroy(){
+            BaseSlider.onValueChanged.RemoveAllListeners();
+            BaseInputField.onEndEdit.RemoveAllListeners();
         }
     }
 }

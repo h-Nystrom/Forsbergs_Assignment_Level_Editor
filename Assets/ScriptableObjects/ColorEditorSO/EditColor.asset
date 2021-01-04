@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96e2d8b21e1d2384a817507b4cb721f2, type: 3}
   m_Name: EditColor
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: ca6c8f8fff7770e4a9f9593a2825962b, type: 2}
