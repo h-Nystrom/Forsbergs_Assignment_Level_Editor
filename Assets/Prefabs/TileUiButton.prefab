@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 8922504782180873359}
   - component: {fileID: 8922504782180873356}
   - component: {fileID: 6864699782670464578}
+  - component: {fileID: 6053022181644578439}
   m_Layer: 5
   m_Name: TileUiButton
   m_TagString: Untagged
@@ -291,3 +292,23 @@ MonoBehaviour:
   borderUi: {fileID: 475104061}
   button: {fileID: 8922504782180873356}
   text: {fileID: 8922504780737062925}
+--- !u!114 &6053022181644578439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8922504782180873362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 100
+  m_PreferredWidth: -1
+  m_PreferredHeight: 140
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
