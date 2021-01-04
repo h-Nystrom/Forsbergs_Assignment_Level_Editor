@@ -13,7 +13,6 @@ namespace UI{
         }
 
         public void OnDrag(PointerEventData eventData){
-            print("OnDrag");
             rectTransform.anchoredPosition += eventData.delta;
         }
         public void OnPointerDown(PointerEventData eventData){

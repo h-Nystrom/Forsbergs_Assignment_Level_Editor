@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UI{
     public class CanvasEnableSwitch : MonoBehaviour{
         [SerializeField] Canvas canvas;
-        bool isEnabled;
+
+        public void OnClickSwitch(){
+            canvas.enabled = !canvas.enabled;
+        }
+
         public void OnClick(){
-            isEnabled = !isEnabled;
-            canvas.enabled = isEnabled;
+            canvas.enabled = true;
         }
     }
 }

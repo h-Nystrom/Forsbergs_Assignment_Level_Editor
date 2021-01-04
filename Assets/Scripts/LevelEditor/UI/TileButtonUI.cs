@@ -1,6 +1,4 @@
-﻿using System;
-using LevelEditor;
-using LevelEditor.DeveloperTools;
+﻿using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,22 +6,30 @@ namespace LevelEditor.UI{
     public class TileButtonUI : MonoBehaviour{
         TileSO tileSo;
         [SerializeField]Image borderUi;
-        [SerializeField]Button button;
-        [SerializeField] Text text;
+        [SerializeField]Button editButton;
+        [SerializeField]Button tileButton;
+        [SerializeField]Image tileImage;
+        [SerializeField]Text text;
+        
         int id;
-        public void SetUp(TileSO tileSo, int id, TileButtonUIController tileButtonUIController){
+
+        public void SetUp(TileSO tileSo, int id, TileButtonUIController tileButtonUIController, CanvasEnableSwitch canvasEnableSwitch){
             this.id = id;
-            ColorBlock colorBlock = button.colors;
-            colorBlock.normalColor = tileSo.TileMaterial.color;
-            button.colors = colorBlock;
+            
+            tileImage.material = tileSo.TileMaterial;
             transform.name = tileSo.name;
             text.text = tileSo.name;
-            button.onClick.AddListener(delegate {tileButtonUIController.ChangeTileOnClick(id);});
-            button.onClick.AddListener(delegate {tileButtonUIController.ChangeBorderUiIndicator(id);});
+            editButton.onClick.AddListener(delegate{ OnSelectEditClick(tileButtonUIController, canvasEnableSwitch);});
+            tileButton.onClick.AddListener(delegate{ OnSelectTileClick(tileButtonUIController);});
         }
 
-        void OnDestroy(){
-            button.onClick.RemoveAllListeners();
+        void OnSelectEditClick(TileButtonUIController tileButtonUIController, CanvasEnableSwitch canvasEnableSwitch){
+            OnSelectTileClick(tileButtonUIController);
+            canvasEnableSwitch.OnClick();
+        }
+        void OnSelectTileClick(TileButtonUIController tileButtonUIController){
+            tileButtonUIController.ChangeTileOnClick(id);
+            tileButtonUIController.ChangeBorderUiIndicator(id);
         }
         public void OnDeSelected(){
             borderUi.color = Color.black;

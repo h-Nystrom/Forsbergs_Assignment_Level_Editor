@@ -9,7 +9,9 @@ namespace LevelEditor{
         TileSO tileSo;
         public TileData[,] Grid => grid;
 
-        public void SetUp(TileSO tileSo, Transform parent){
+        public void SetUp(TileSO tileSo, Transform parent, int columns, int rows){
+            this.columns = columns;
+            this.rows = rows;
             this.tileSo = tileSo;
             this.parent = parent;
         }

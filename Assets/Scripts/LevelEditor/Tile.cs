@@ -16,7 +16,6 @@ namespace LevelEditor{
         public void ChangeTileType(TileSO tileSo){
             TileType = tileSo;
             spriteRenderer.material = TileType.TileMaterial;
-            print("Change");
         }
     }
 }
