@@ -818,7 +818,7 @@ GameObject:
   - component: {fileID: 365910558}
   - component: {fileID: 365910559}
   m_Layer: 0
-  m_Name: CamPivot
+  m_Name: CameraPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1136,6 +1136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 506472393}
   - component: {fileID: 506472392}
+  - component: {fileID: 506472394}
   m_Layer: 0
   m_Name: LevelEditor
   m_TagString: Untagged
@@ -1175,6 +1176,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &506472394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506472391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec30c82f1edb9924f9bbd1b253f42b78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilePrefab: {fileID: 7602353054719879036, guid: 0f71d700605bcae4c843c209cc29fbf9, type: 3}
 --- !u!1 &516383794
 GameObject:
   m_ObjectHideFlags: 0
@@ -2215,6 +2229,14 @@ PrefabInstance:
     - target: {fileID: 2901363670360647571, guid: cf8b6bc39bededc42a9e97dc09d62cbb, type: 3}
       propertyPath: m_Name
       value: TileEditorCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2901363670360647571, guid: cf8b6bc39bededc42a9e97dc09d62cbb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2901363670360647572, guid: cf8b6bc39bededc42a9e97dc09d62cbb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2901363670360647575, guid: cf8b6bc39bededc42a9e97dc09d62cbb, type: 3}
       propertyPath: m_Pivot.x
