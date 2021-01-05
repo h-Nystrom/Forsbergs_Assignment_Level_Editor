@@ -1,20 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace LevelEditor{
     public class TileMap : MonoBehaviour{
         
-        [SerializeField]TileSO[] tileData;//ScriptableObject
-        [SerializeField] TileNames startTileName;
+        [SerializeField]TileManager tileManager;
         [SerializeField] int columns, rows;
         GridGenerator gridGenerator = new GridGenerator();
-
+        TileData[,] TileGrid{ get; set; }
         public int Columns => columns;
 
         public int Rows => rows;
 
-        void Start(){
-            gridGenerator.SetUp(tileData[(int) startTileName], transform, columns, rows);
-            gridGenerator.GenerateGrid(true);
+        public void Start(){
+            //TODO: If save files = 0
+            GenerateNewMap();
+        }
+        public void GenerateNewMap(){
+            gridGenerator.SetUp(tileManager, transform);
+            gridGenerator.GenerateGrid(new TileData[columns,rows], columns, rows);
+            TileGrid = gridGenerator.Grid;
         }
     }
 }

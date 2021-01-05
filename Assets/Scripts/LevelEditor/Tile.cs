@@ -3,19 +3,18 @@
 namespace LevelEditor{
     [RequireComponent(typeof(SpriteRenderer))]
     public class Tile : MonoBehaviour{
-        public TileData TileInfo{ get; private set; }
-        public TileSO TileType{ get; private set; }
+        public TileData TileData{ get; private set; }
+        public TileType TileType{ get; private set; }
 
-        SpriteRenderer spriteRenderer => GetComponent<SpriteRenderer>();
+        SpriteRenderer SpriteRenderer => GetComponent<SpriteRenderer>();
 
-        public void SetUp(TileData tileData, TileSO tileSo){
-            TileInfo = tileData;
-            TileType = tileSo;
+        public void SetUp(TileData tileData, TileType tileType){
+            TileData = tileData;
+            TileType = tileType;
         }
-        
-        public void ChangeTileType(TileSO tileSo){
-            TileType = tileSo;
-            spriteRenderer.material = TileType.TileMaterial;
+        public void ChangeTileType(TileType tileType){
+            TileType = tileType;
+            SpriteRenderer.material = TileType.material;
         }
     }
 }

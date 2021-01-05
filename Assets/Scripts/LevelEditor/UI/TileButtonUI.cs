@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace LevelEditor.UI{
     public class TileButtonUI : MonoBehaviour{
-        TileSO tileSo;
+        TileType tileManager;
         [SerializeField]Image borderUi;
         [SerializeField]Button editButton;
         [SerializeField]Button tileButton;
@@ -13,12 +13,12 @@ namespace LevelEditor.UI{
         
         int id;
 
-        public void SetUp(TileSO tileSo, int id, TileButtonUIController tileButtonUIController, CanvasEnableSwitch canvasEnableSwitch){
+        public void SetUp(TileType tileType, int id, TileButtonUIController tileButtonUIController, CanvasEnableSwitch canvasEnableSwitch){
             this.id = id;
             
-            tileImage.material = tileSo.TileMaterial;
-            transform.name = tileSo.name;
-            text.text = tileSo.name;
+            tileImage.material = tileType.material;
+            transform.name = tileType.name;
+            text.text = tileType.name;
             editButton.onClick.AddListener(delegate{ OnSelectEditClick(tileButtonUIController, canvasEnableSwitch);});
             tileButton.onClick.AddListener(delegate{ OnSelectTileClick(tileButtonUIController);});
         }

@@ -31,8 +31,8 @@ namespace LevelEditor{
                 return;
             }
             Count++;
-            var tileSo = ScriptableObject.CreateInstance<TileSO>();
-            tileSo.NewInstance(CreateMaterial(name,color),tilePrefab,name);
+            var tileSo = ScriptableObject.CreateInstance<TileManager>();
+            //tileSo.NewInstance(CreateMaterial(name,color),tilePrefab,name);
         }
         //TODO: Change to json instead of using unityEditor methods!
         static Material CreateMaterial(string name, Color color){

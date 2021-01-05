@@ -6,11 +6,11 @@ namespace LevelEditor.DeveloperTools{
     [RequireComponent(typeof(Camera))]
     public class MouseEditing : MonoBehaviour{
         [SerializeField] LayerMask layerMask;
-        [SerializeField] TileSO[] tileSo;//Move to scriptableObject
+        [SerializeField] TileManager tileManager;
         UserControls userInput;
         Vector2 mousePosition;
         RaycastHit2D hit;
-        [SerializeField]TileNames tileNames;
+        int currentTileIndex;
         //TODO: Show currently selected button(New script)
         //TODO: Toggle between tile types with nr buttons
         //TODO: Multiple selections when dragging the mouse
@@ -24,8 +24,8 @@ namespace LevelEditor.DeveloperTools{
             userInput.UserAction.MousePosition.performed += ctx => mousePosition = ctx.ReadValue<Vector2>();
         }
 
-        public void OnChangeTileType(TileNames tileNames){
-            this.tileNames = tileNames;
+        public void OnChangeTileType(int tileIndex){
+            currentTileIndex = tileIndex;
         }
         void OnClick(){
             Debug.DrawRay(Cam.ScreenToWorldPoint(mousePosition), Vector3.forward * 10,Color.red,10f);
@@ -34,10 +34,8 @@ namespace LevelEditor.DeveloperTools{
             if(hit.collider == null)
                 return;
             var tile = hit.collider.gameObject.GetComponent<Tile>();
-            tile.ChangeTileType(tileSo[(int)tileNames]);
-            //print("Click: " + tile.TileInfo.ID);
+            tile.ChangeTileType(tileManager.TileTypes[currentTileIndex]);
         }
-
         void OnEnable(){
             userInput.Enable();
         }

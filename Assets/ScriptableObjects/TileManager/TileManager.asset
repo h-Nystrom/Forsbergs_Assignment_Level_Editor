@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c5328d96b6a9ca42bb9b2e6d3c19ee1, type: 3}
-  m_Name: Water
+  m_Name: TileManager
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: e1e40c3e832c68046931af2cf9359ad5, type: 2}
-  tilePrefab: {fileID: 7602353054719879036, guid: 0f71d700605bcae4c843c209cc29fbf9, type: 3}
-  tileNames: 1
+  tileTypes: []
+  tilePrefab: {fileID: 0}

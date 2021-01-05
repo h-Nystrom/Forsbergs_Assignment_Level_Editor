@@ -2,31 +2,24 @@
 
 namespace LevelEditor{
     public class GridGenerator{
-        TileData[,] grid;
-        int columns = 10;
-        int rows = 10;
         Transform parent;
-        TileSO tileSo;
-        public TileData[,] Grid => grid;
-
-        public void SetUp(TileSO tileSo, Transform parent, int columns, int rows){
-            this.columns = columns;
-            this.rows = rows;
-            this.tileSo = tileSo;
+        TileManager tileManager;
+        public TileData[,] Grid{ get; private set;}
+        public void SetUp(TileManager tileManager, Transform parent){
+            this.tileManager = tileManager;
             this.parent = parent;
         }
-        public void GenerateGrid(bool canInstantiate){
-            grid = new TileData[rows,columns];
+        public void GenerateGrid(TileData[,] grid, int columns, int rows){
+            Grid = grid;
             for (var column = 0; column < columns; column++){
                 for (var row = 0; row < rows; row++){
-                    grid[row, column].SetUp(row,column);
-                    if(canInstantiate)
-                        InstantiateGrid(grid[row, column]);
+                    Grid[row, column].SetUp(row,column);
+                    InstantiateGrid(Grid[row, column]);
                 }
             }
         }
         private void InstantiateGrid(TileData tileData){
-           tileSo.SetUp(tileData, parent);
+           tileManager.SetUp(tileData, parent);
         }
     }
 }
