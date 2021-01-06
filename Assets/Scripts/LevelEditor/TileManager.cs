@@ -5,11 +5,12 @@ using UnityEngine;
 namespace LevelEditor{
     [CreateAssetMenu(menuName = "LevelEditor/TileManager", fileName = "NewTileManager")]
     public class TileManager : ScriptableObject{
+        const int MaxTiles = 10;
         List<TileType> tileTypes = new List<TileType>();
-        public List<TileType> TileTypes => tileTypes;
-
         GameObject tilePrefab;
 
+        public bool IsFull => tileTypes.Count == MaxTiles;
+        public List<TileType> TileTypes => tileTypes;
         public void Add(TileType tileType){
             tileTypes.Add(tileType);
         }
@@ -17,6 +18,9 @@ namespace LevelEditor{
             tileTypes.Remove(tileType);
         }
 
+        public int Find(TileType tileType){
+            return tileTypes.IndexOf(tileType);
+        }
         public void Clear(){
             tileTypes.Clear();
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace LevelEditor.DeveloperTools{
     [RequireComponent(typeof(Camera))]
@@ -11,7 +12,6 @@ namespace LevelEditor.DeveloperTools{
         Vector2 mousePosition;
         RaycastHit2D hit;
         int currentTileIndex;
-        //TODO: Show currently selected button(New script)
         //TODO: Toggle between tile types with nr buttons
         //TODO: Multiple selections when dragging the mouse
         //TODO: Research how to save the maps
@@ -28,18 +28,25 @@ namespace LevelEditor.DeveloperTools{
             currentTileIndex = tileIndex;
         }
         void OnClick(){
-            Debug.DrawRay(Cam.ScreenToWorldPoint(mousePosition), Vector3.forward * 10,Color.red,10f);
+            //Debug.DrawRay(Cam.ScreenToWorldPoint(mousePosition), Vector3.forward * 10,Color.red,10f);
+            if(IsMouseBlockedByUi())
+                return;
             hit = Physics2D.Raycast(Cam.ScreenToWorldPoint(mousePosition), Vector3.forward, 10f,
                 layerMask);
-            if(hit.collider == null)
+            if(hit.collider == null || tileManager.TileTypes.Count == 0)
                 return;
             var tile = hit.collider.gameObject.GetComponent<Tile>();
             tile.ChangeTileType(tileManager.TileTypes[currentTileIndex]);
         }
+        //TODO:Extra: Add an IEnumerator that paints tiles when the mouse is pressed. 
+
+        bool IsMouseBlockedByUi(){
+            return EventSystem.current.IsPointerOverGameObject();
+        }
+
         void OnEnable(){
             userInput.Enable();
         }
-
         void OnDisable(){
             userInput.Disable();
         }
