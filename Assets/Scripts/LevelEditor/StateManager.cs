@@ -1,58 +1,52 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
-using ColorEditor;
+using SaveSystem;
 
 namespace LevelEditor{
     public class StateManager : MonoBehaviour{
-        //TODO var of list with LevelObjects!
         const int MaxLevels = 10;
         [SerializeField]TileManager tileManager;
-        [SerializeField] TileMapController tileMapController;
-        int currentLevelIndex;
+        [SerializeField]TileMapController tileMapController;
+        public LevelObject CurrentLevel{ get; private set; }
+        public List<string> savedLevelNames{ get; private set; }
 
-        public LevelObject CurrentLevelObject{ get; private set; }
-        public List<string> SavedData{ get; private set; }
-
-        // void Awake(){
-        //     //TODO: Read JsonFile and save to string list!
-        // }
-
+        void Awake(){
+            tileManager.Clear();
+            savedLevelNames = FindSavedFiles();
+        }
         public void CreateNewLevel(){
             if(tileManager.TileTypes.Count == 0)
                 return;
             tileMapController.GenerateNewTileMap();
-            var level = new LevelObject{
+            CurrentLevel = new LevelObject{
                 name = tileMapController.LevelName,
-                Tiles = tileMapController.TileGrid,
-                tileTypes = tileManager.TileTypes,
                 createdTimeDate = TimeDateConverter.CurrentUnixTime()
             };
-            //TODO: Save level here
+            Save();
         }
-        // public void Save(){
-        //     // JsonUtility.FromJsonOverwrite(SavedData[currentLevelIndex], 
-        //     //     CurrentLevelObject.UpdateLevel(tileMap.TileGrid,tileManager.TileTypes.ToArray()));
-        //     // print(SavedData[currentLevelIndex]);
-        //     
-        // }
-        // public void OnDestroySavedLevel(int levelIndex){
-        //     // //LevelObjects.RemoveAt(levelIndex);
-        //     // //TODO: ReWriteJsonFile
-        //     // if(levelIndex != currentLevelIndex)
-        //     //     return;
-        //     // //TODO: ReloadScene if currentLevel!
-        // }
-        // public void Load(int levelIndex){
-        //     // currentLevelIndex = levelIndex;
-        //     // JsonUtility.FromJson(SavedData[levelIndex]);
-        //     //TODO: Send info to TileButtonUIController!
-        //     //TODO: Send info
-        // }
-        // public void Reset(){
-        //     //TODO: reset json file
-        //     //TODO: ReloadScene
-        // }
+        public void Save(){
+            if(CurrentLevel == null)
+                return;
+            var oldCreatedTimeDate = CurrentLevel.createdTimeDate;
+            var oldLevelName = CurrentLevel.name;
+            CurrentLevel = new LevelObject{
+                tileTypes = tileManager.TileTypes,
+                createdTimeDate = oldCreatedTimeDate,
+                name = oldLevelName
+            };
+            
+            print(SerializationManager.Save(CurrentLevel));
+        }
+
+        public List<string> FindSavedFiles(){
+            return SerializationManager.GetSavedFileNames();
+        }
+        public void Load(){
+            if(CurrentLevel == null)
+                return;
+            CurrentLevel = SerializationManager.Load(CurrentLevel.name);
+            print(CurrentLevel.name);
+        }
         public void Quit()
         {
             //TODO: ask for saving before here

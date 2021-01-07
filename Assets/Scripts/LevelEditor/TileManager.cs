@@ -8,9 +8,11 @@ namespace LevelEditor{
         const int MaxTiles = 10;
         [SerializeField] GameObject tilePrefab;
         List<TileType> tileTypes = new List<TileType>();
+        List<TileType> tileTypesInGrid = new List<TileType>();
         public int StartingTileTypeIndex{ get; set; }
         public bool IsFull => tileTypes.Count == MaxTiles;
         public List<TileType> TileTypes => tileTypes;
+        public List<TileType> TileTypesInGrid => tileTypesInGrid;
 
         public void Add(TileType tileType){
             tileTypes.Add(tileType);
@@ -26,19 +28,18 @@ namespace LevelEditor{
 
         public void Clear(){
             tileTypes.Clear();
+            tileTypesInGrid.Clear();
         }
-
-        //TODO: add start tileNr here
-        public void SetUpNew(TileData tileData, Transform parent){
-            tileData.TileType = tileTypes[StartingTileTypeIndex];
-            var instance = Instantiate(tilePrefab, tileData.Position, Quaternion.identity, parent);
-            instance.GetComponent<SpriteRenderer>().material = tileTypes[StartingTileTypeIndex].material;
-            instance.GetComponent<Tile>().NewSetUp(tileData, tileTypes[StartingTileTypeIndex]);
+        public void SetUpNew(Vector2 position, Transform parent){
+            var tileType = tileTypes[StartingTileTypeIndex];
+            tileType.position = position;
+            SetUp(tileType, parent);
         }
-        public void SetUp(TileData tileData, Transform parent){
-            var instance = Instantiate(tilePrefab, tileData.Position, Quaternion.identity, parent);
-            instance.GetComponent<SpriteRenderer>().material = tileData.TileType.material;
-            instance.GetComponent<Tile>().SetUp(tileData);
+        public void SetUp(TileType tileType, Transform parent){
+            var instance = Instantiate(tilePrefab, tileType.position, Quaternion.identity, parent);
+            instance.GetComponent<SpriteRenderer>().material = tileType.material;
+            instance.GetComponent<Tile>().SetUp(tileType);
+            tileTypesInGrid.Add(tileType);
         }
     }
 }

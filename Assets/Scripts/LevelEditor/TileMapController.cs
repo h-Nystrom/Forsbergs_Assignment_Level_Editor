@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
@@ -9,7 +10,6 @@ namespace LevelEditor{
         readonly GridGenerator gridGenerator = new GridGenerator();
         int columns = 10;
         int rows = 10;
-        public TileData[,] TileGrid{ get; set; }
         public string LevelName{ get; set; }
         public float Columns{
             get => columns;
@@ -19,18 +19,13 @@ namespace LevelEditor{
             get => rows;
             set => rows = (int)value;
         }
-        void Start(){//TODO: Change to public void Create();
+        void Start(){
             GenerateNewTileMap();
-            //Invoke(nameof(RemoveTiles),5f);
-            //Invoke(nameof(TestLoad), 10f);
         }
-        public void Load(){//TODO: add TileData[,] param
+        public void Load(LevelObject levelObject){
             RemoveTiles();
-            GenerateOldTileMap(TileGrid);
-        }
-
-        public void TestLoad(){
-            GenerateOldTileMap(TileGrid);
+            gridGenerator.SetUp(tileManager, transform);
+            gridGenerator.GenerateOldGrid(levelObject.tileTypesGrid, levelObject.rows, levelObject.columns);
         }
         public void GenerateNewTileMap(){
             if(tileManager.TileTypes.Count == 0)
@@ -38,13 +33,6 @@ namespace LevelEditor{
             RemoveTiles();
             gridGenerator.SetUp(tileManager, transform);
             gridGenerator.GenerateGrid(columns, rows);
-            TileGrid = gridGenerator.Grid;
-        }
-        public void GenerateOldTileMap(TileData[,] tileGridData){
-            RemoveTiles();
-            gridGenerator.SetUp(tileManager, transform);
-            gridGenerator.GenerateOldGrid(tileGridData, tileGridData.GetLength(0), tileGridData.GetLength(1));
-            TileGrid = gridGenerator.Grid;
         }
         void RemoveTiles(){
             var tiles = transform.childCount;

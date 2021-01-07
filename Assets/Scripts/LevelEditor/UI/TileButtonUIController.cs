@@ -34,11 +34,11 @@ namespace LevelEditor.UI{
             tileManager.Clear();
         }
 
-        public void InstantiateUiButtons(){
+        void InstantiateUiButtons(){
             
-            for (var i = 0; i < tileManager.TileTypes.Count; i++){
+            foreach (var tileType in tileManager.TileTypes){
                 var instance = Instantiate(tileUiPrefab, transform);
-                instance.SetUp(tileManager.TileTypes[i],tileManager, this, canvasEnableSwitch, colorEditorController);
+                instance.SetUp(tileType,tileManager, this, canvasEnableSwitch, colorEditorController);
                 tileButtonUIs.Add(instance);
             }
             tileButtonUIs[0].OnSelected();

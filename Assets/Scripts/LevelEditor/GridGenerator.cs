@@ -1,41 +1,29 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace LevelEditor{
     public class GridGenerator{
+        const float Offset = 1.05f;
         Transform parent;
         TileManager tileManager;
-        public TileData[,] Grid{ get; private set;}
         public void SetUp(TileManager tileManager, Transform parent){
             this.tileManager = tileManager;
             this.parent = parent;
         }
         public void GenerateGrid(int columns, int rows){
-            Grid = new TileData[rows,columns];
+            var grid = new TileType[rows, columns];
             for (var column = 0; column < columns; column++){
                 for (var row = 0; row < rows; row++){
-                    var tileData = new TileData();
-                    tileData.SetUp(row,column);
-                    InstantiateNewGrid(tileData);
-                    Grid[row, column] = tileData;
+                    var position = new Vector2(row * Offset, column * Offset);
+                    tileManager.SetUpNew(position, parent);
                 }
             }
         }
-        public void GenerateOldGrid(TileData[,] grid, int columns, int rows){
-            Grid = new TileData[rows, columns];
-            Grid = grid;
-            for (var column = 0; column < columns; column++){
-                for (var row = 0; row < rows; row++){
-                    InstantiateOldGrid(Grid[row,column]);
-                }
+
+        public void GenerateOldGrid(List<TileType> tileTypeList, int columns, int rows){
+            foreach (var tileType in tileTypeList){
+                tileManager.SetUp(tileType, parent);
             }
         }
-        
-        void InstantiateNewGrid(TileData tileData){
-            tileManager.SetUpNew(tileData, parent);
-        }
-        void InstantiateOldGrid(TileData tileData){
-            tileManager.SetUp(tileData, parent);
-        }
-        
     }
 }
