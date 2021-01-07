@@ -40,6 +40,7 @@ namespace LevelEditor.UI{
             var index = tileManager.Find(TileType);
             tileButtonUIController.ChangeTileOnClick(index);
             tileButtonUIController.ChangeBorderUiIndicator(index);
+            tileManager.StartingTileTypeIndex = index;
         }
         public void OnDeSelected(){
             borderUi.color = Color.black;

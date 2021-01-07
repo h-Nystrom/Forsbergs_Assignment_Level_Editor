@@ -1,13 +1,10 @@
-﻿using System;
-using LevelEditor.UI;
+﻿using LevelEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ColorEditor{
     public class ColorEditorController : MonoBehaviour
     {
-        //TODO: string event for hex
-        //TODO: apply changes
         [SerializeField] InputField nameInputField;
         [SerializeField] EditingColor editingColor;
         [SerializeField] HexUi hexUi;
@@ -20,7 +17,6 @@ namespace ColorEditor{
             hexUi.OnUpdateColor(ColorUtility.ToHtmlStringRGBA(tileButtonUI.TileType.material.color));
             nameInputField.text = tileButtonUI.name;
         }
-        
         public void OnApplyChanges(){
             tileButtonUI.TileType.material.color = editingColor.Material.color;
             tileButtonUI.TileType.name = nameInputField.text;
@@ -29,5 +25,4 @@ namespace ColorEditor{
             tileButtonUI = null;
         }
     }
-    
 }

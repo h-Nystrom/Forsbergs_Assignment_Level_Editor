@@ -8,12 +8,20 @@ namespace LevelEditor{
 
         SpriteRenderer SpriteRenderer => GetComponent<SpriteRenderer>();
 
-        public void SetUp(TileData tileData, TileType tileType){
+        public void NewSetUp(TileData tileData, TileType tileType){
             TileData = tileData;
             TileType = tileType;
         }
+
+        public void SetUp(TileData tileData){
+            TileData = tileData;
+            TileType = tileData.TileType;
+        }
         public void ChangeTileType(TileType tileType){
             TileType = tileType;
+            var tileData = TileData;
+            tileData.TileType = tileType;
+            TileData = tileData;
             SpriteRenderer.material = TileType.material;
         }
     }

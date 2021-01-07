@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ColorEditor;
-using LevelEditor;
 using LevelEditor.DeveloperTools;
 using UI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace LevelEditor.UI{
     public class TileButtonUIController : MonoBehaviour{
@@ -19,8 +16,9 @@ namespace LevelEditor.UI{
         [SerializeField]TileType[] protectedDefaultTileTypes = new TileType[2];
         TileType[] defaultTileTypes = new TileType[2];
         
-        void Awake(){
+        void Start(){
             tileManager.Clear();
+            tileManager.StartingTileTypeIndex = 0;
             if (tileManager.TileTypes.Count == 0){
                 for (var i = 0; i < protectedDefaultTileTypes.Length; i++){
                     defaultTileTypes[i] = new TileType{material = new Material(Shader.Find("Sprites/Default")), name = "New Tile"};
@@ -56,6 +54,7 @@ namespace LevelEditor.UI{
             var tileType = new TileType{material = new Material(Shader.Find("Sprites/Default")), name = "New Tile"};
             tileType.material.color = Color.white;
             tileManager.Add(tileType);
+            tileManager.StartingTileTypeIndex = index;
             instance.SetUp(tileManager.TileTypes[index],tileManager, this, canvasEnableSwitch, colorEditorController);
             tileButtonUIs.Add(instance);
             if(currentlySelected != null)
@@ -64,16 +63,18 @@ namespace LevelEditor.UI{
             currentlySelected = tileButtonUIs[index];
             ChangeTileOnClick(index);
         }
-        public void EditTile(){
-            throw new NotImplementedException();
-        }
         public void DestroyTile(){
-            if(currentlySelected == null)
+            if (currentlySelected == null){
+                tileManager.StartingTileTypeIndex = 0;
                 return;
+            }
+                
+
             tileManager.Remove(currentlySelected.TileType);
             tileButtonUIs.Remove(currentlySelected);
             Destroy(currentlySelected.gameObject);
             currentlySelected = null;
+            tileManager.StartingTileTypeIndex = 0;
         }
         public void ChangeTileOnClick(int buttonId){
             mouseEditing.OnChangeTileType(buttonId);

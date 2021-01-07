@@ -9,17 +9,33 @@ namespace LevelEditor{
             this.tileManager = tileManager;
             this.parent = parent;
         }
-        public void GenerateGrid(TileData[,] grid, int columns, int rows){
-            Grid = grid;
+        public void GenerateGrid(int columns, int rows){
+            Grid = new TileData[rows,columns];
             for (var column = 0; column < columns; column++){
                 for (var row = 0; row < rows; row++){
-                    Grid[row, column].SetUp(row,column);
-                    InstantiateGrid(Grid[row, column]);
+                    var tileData = new TileData();
+                    tileData.SetUp(row,column);
+                    InstantiateNewGrid(tileData);
+                    Grid[row, column] = tileData;
                 }
             }
         }
-        private void InstantiateGrid(TileData tileData){
-           tileManager.SetUp(tileData, parent);
+        public void GenerateOldGrid(TileData[,] grid, int columns, int rows){
+            Grid = new TileData[rows, columns];
+            Grid = grid;
+            for (var column = 0; column < columns; column++){
+                for (var row = 0; row < rows; row++){
+                    InstantiateOldGrid(Grid[row,column]);
+                }
+            }
         }
+        
+        void InstantiateNewGrid(TileData tileData){
+            tileManager.SetUpNew(tileData, parent);
+        }
+        void InstantiateOldGrid(TileData tileData){
+            tileManager.SetUp(tileData, parent);
+        }
+        
     }
 }

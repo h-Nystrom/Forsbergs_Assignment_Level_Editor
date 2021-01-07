@@ -16,6 +16,7 @@ namespace LevelEditor.DeveloperTools{
         //TODO: Multiple selections when dragging the mouse
         //TODO: Research how to save the maps
         //TODO: Save/load maps
+        //TODO: Create InputController;
         Camera Cam => GetComponent<Camera>();
         Image buttonUiBorder;
         void Awake(){
