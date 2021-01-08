@@ -4,18 +4,15 @@ using NUnit.Framework;
 using SaveSystem;
 using UnityEngine;
 
-namespace Editor
-{
+namespace Editor{
     public class LevelEditorTest{
-
         [Test]
         public void CanSaveData(){
-            
             var listTileType = new List<TileType>();
             var tileType = new TileType{
                 name = "Grass",
                 material = new Material(Shader.Find("Sprites/Default")),
-                position = new Vector2(10,0)
+                position = new Vector2(10, 0)
             };
             tileType.material.color = Color.blue;
             listTileType.Add(tileType);
@@ -50,21 +47,19 @@ namespace Editor
             Assert.AreEqual("Test1", levelObject.name);
             Assert.AreEqual(100, levelObject.createdTimeDate);
             Assert.AreEqual(1, levelObject.tileTypes.Count);
-            Assert.AreEqual(new Vector2(10,0), levelObject.tileTypes[0].position);
+            Assert.AreEqual(new Vector2(10, 0), levelObject.tileTypes[0].position);
         }
 
         [Test]
         public void CanDestroyData(){
             var levelName = "Test3";
-            Assert.AreEqual(true,SerializationManager.Delete(levelName));
+            Assert.AreEqual(true, SerializationManager.Delete(levelName));
         }
 
         [Test]
         public void CanPutAllSavedDataFilesToList(){
             var savedFileNames = SerializationManager.GetSavedFileNames();
-            foreach (var name in savedFileNames){
-                Debug.Log(name);
-            }
+            foreach (var name in savedFileNames) Debug.Log(name);
             Assert.AreEqual("Test1", savedFileNames[0]);
         }
     }

@@ -1,10 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ColorEditor{
     [CreateAssetMenu(menuName = "ColorPicker/RGBAColor")]
     public class RgbaColor : ScriptableObject{
-        
         [SerializeField] ColorNames colorName;
         [SerializeField] VoidEvent updateColorEvent;
         public float Value{ get; set; }
@@ -16,4 +14,3 @@ namespace ColorEditor{
         }
     }
 }
-

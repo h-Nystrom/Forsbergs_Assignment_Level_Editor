@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace ColorEditor{
@@ -8,11 +7,19 @@ namespace ColorEditor{
         [SerializeField] protected HexUi hexUi;
         Slider BaseSlider => GetComponentInChildren<Slider>();
         InputField BaseInputField => GetComponentInChildren<InputField>();
+
         protected virtual void Awake(){
             rgbaColor.GrayScaleValue = 1;
             rgbaColor.Value = 1;
-            BaseInputField.onEndEdit.AddListener(delegate{BaseSlider.value = Calculations.ConvertToClampedFloat(BaseInputField.text, 1);});
-            BaseSlider.onValueChanged.AddListener(delegate{OnSliderChange(BaseSlider.value);});
+            BaseInputField.onEndEdit.AddListener(delegate{
+                BaseSlider.value = Calculations.ConvertToClampedFloat(BaseInputField.text, 1);
+            });
+            BaseSlider.onValueChanged.AddListener(delegate{ OnSliderChange(BaseSlider.value); });
+        }
+
+        protected virtual void OnDestroy(){
+            BaseSlider.onValueChanged.RemoveAllListeners();
+            BaseInputField.onEndEdit.RemoveAllListeners();
         }
 
         void OnSliderChange(float value){
@@ -20,10 +27,6 @@ namespace ColorEditor{
             BaseInputField.text = Calculations.ConvertToString255(value);
             rgbaColor.UpdateColor();
             hexUi.UpdateText();
-        }
-        protected virtual void OnDestroy(){
-            BaseSlider.onValueChanged.RemoveAllListeners();
-            BaseInputField.onEndEdit.RemoveAllListeners();
         }
     }
 }

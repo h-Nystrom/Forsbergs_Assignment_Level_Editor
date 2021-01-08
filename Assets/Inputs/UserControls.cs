@@ -33,6 +33,14 @@ public class @UserControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""MovementDir"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3e3fd29-e491-4d3b-a5aa-368334ae5e79"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -57,6 +65,61 @@ public class @UserControls : IInputActionCollection, IDisposable
                     ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""78b14b2c-dddb-4cca-8e5d-bab2f2a1dbac"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementDir"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""3028b617-3201-475a-a950-b7eac3f7d015"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""8c35502f-9655-49ac-9e84-3b436824c18b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""bda8ad8b-cf98-4703-9266-99bcb28dcc91"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""73044d50-f12a-4d4c-8750-417424922da1"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -67,6 +130,7 @@ public class @UserControls : IInputActionCollection, IDisposable
         m_UserAction = asset.FindActionMap("UserAction", throwIfNotFound: true);
         m_UserAction_LeftMouseClick = m_UserAction.FindAction("LeftMouseClick", throwIfNotFound: true);
         m_UserAction_MousePosition = m_UserAction.FindAction("MousePosition", throwIfNotFound: true);
+        m_UserAction_MovementDir = m_UserAction.FindAction("MovementDir", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -118,12 +182,14 @@ public class @UserControls : IInputActionCollection, IDisposable
     private IUserActionActions m_UserActionActionsCallbackInterface;
     private readonly InputAction m_UserAction_LeftMouseClick;
     private readonly InputAction m_UserAction_MousePosition;
+    private readonly InputAction m_UserAction_MovementDir;
     public struct UserActionActions
     {
         private @UserControls m_Wrapper;
         public UserActionActions(@UserControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @LeftMouseClick => m_Wrapper.m_UserAction_LeftMouseClick;
         public InputAction @MousePosition => m_Wrapper.m_UserAction_MousePosition;
+        public InputAction @MovementDir => m_Wrapper.m_UserAction_MovementDir;
         public InputActionMap Get() { return m_Wrapper.m_UserAction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -139,6 +205,9 @@ public class @UserControls : IInputActionCollection, IDisposable
                 @MousePosition.started -= m_Wrapper.m_UserActionActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_UserActionActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_UserActionActionsCallbackInterface.OnMousePosition;
+                @MovementDir.started -= m_Wrapper.m_UserActionActionsCallbackInterface.OnMovementDir;
+                @MovementDir.performed -= m_Wrapper.m_UserActionActionsCallbackInterface.OnMovementDir;
+                @MovementDir.canceled -= m_Wrapper.m_UserActionActionsCallbackInterface.OnMovementDir;
             }
             m_Wrapper.m_UserActionActionsCallbackInterface = instance;
             if (instance != null)
@@ -149,6 +218,9 @@ public class @UserControls : IInputActionCollection, IDisposable
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
+                @MovementDir.started += instance.OnMovementDir;
+                @MovementDir.performed += instance.OnMovementDir;
+                @MovementDir.canceled += instance.OnMovementDir;
             }
         }
     }
@@ -157,5 +229,6 @@ public class @UserControls : IInputActionCollection, IDisposable
     {
         void OnLeftMouseClick(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnMovementDir(InputAction.CallbackContext context);
     }
 }

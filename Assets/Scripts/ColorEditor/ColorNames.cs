@@ -1,6 +1,8 @@
-﻿namespace ColorEditor{
-    [System.Serializable]
-        public enum ColorNames{
+﻿using System;
+
+namespace ColorEditor{
+    [Serializable]
+    public enum ColorNames{
         Red,
         Green,
         Blue,

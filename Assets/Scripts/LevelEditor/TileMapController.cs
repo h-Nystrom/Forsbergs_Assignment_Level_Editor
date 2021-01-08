@@ -1,45 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LevelEditor{
     public class TileMapController : MonoBehaviour{
-        
-        [SerializeField]TileManager tileManager;
+        [SerializeField] LevelResources levelResources;
+        [SerializeField] GameObject tileParentPrefab;
+        GameObject currentTileParent;
         readonly GridGenerator gridGenerator = new GridGenerator();
         int columns = 10;
         int rows = 10;
         public string LevelName{ get; set; }
+
         public float Columns{
             get => columns;
-            set => columns = (int)value;
+            set => columns = (int) value;
         }
+
         public float Rows{
             get => rows;
-            set => rows = (int)value;
+            set => rows = (int) value;
         }
-        void Start(){
-            GenerateNewTileMap();
+        public void RemoveTiles(){
+            if(currentTileParent == null)
+                return;
+            Destroy(currentTileParent);
+            currentTileParent = null;
         }
+
         public void Load(LevelObject levelObject){
             RemoveTiles();
-            gridGenerator.SetUp(tileManager, transform);
-            gridGenerator.GenerateOldGrid(levelObject.tileTypesGrid, levelObject.rows, levelObject.columns);
+            var tileParent = Instantiate(tileParentPrefab, transform.position, Quaternion.identity, transform);
+            gridGenerator.SetUp(levelResources, tileParent.transform);
+            gridGenerator.GenerateOldGrid(levelObject.tileTypesGrid);
+            currentTileParent = tileParent;
         }
+
         public void GenerateNewTileMap(){
-            if(tileManager.TileTypes.Count == 0)
-                return;
             RemoveTiles();
-            gridGenerator.SetUp(tileManager, transform);
+            var tileParent = Instantiate(tileParentPrefab, transform.position, Quaternion.identity, transform);
+            gridGenerator.SetUp(levelResources, tileParent.transform);
             gridGenerator.GenerateGrid(columns, rows);
-        }
-        void RemoveTiles(){
-            var tiles = transform.childCount;
-            for (var i = 0; i < tiles; i++){
-                Destroy(transform.GetChild(i).gameObject);
-            }
+            currentTileParent = tileParent;
         }
     }
 }
-

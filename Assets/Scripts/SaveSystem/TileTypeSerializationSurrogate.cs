@@ -12,20 +12,21 @@ namespace SaveSystem{
             info.AddValue("y", tileType.position.y);
         }
 
-        public object SetObjectData(object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector){
+        public object SetObjectData(object obj, SerializationInfo info, StreamingContext context,
+            ISurrogateSelector selector){
             var tileType = (TileType) obj;
             tileType.name = (string) info.GetValue("name", typeof(string));
-            
+
             var x = (float) info.GetValue("x", typeof(float));
             var y = (float) info.GetValue("y", typeof(float));
-            tileType.position = new Vector2(x,y);
-            
+            tileType.position = new Vector2(x, y);
+
             var colorString = (string) info.GetValue("material", typeof(string));
             var material = new Material(Shader.Find("Sprites/Default")){
                 color = ColorUtility.TryParseHtmlString($"#{colorString}", out var color) ? color : Color.white
             };
             tileType.material = material;
-            
+
             return tileType;
         }
     }
